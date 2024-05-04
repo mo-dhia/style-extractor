@@ -1,0 +1,36 @@
+{
+  "name": "style-extractor",
+  "displayName": "Style Extractor",
+  "description": "Style Extractor: A versatile VS Code extension designed to enhance your web development workflow. This extension automatically extracts inline CSS styles from your HTML, React, or Svelte components and generates a separate CSS stylesheet. Simply press Alt+R and watch as your inline styles are neatly organized into a CSS stylesheet, which is then conveniently copied to your clipboard. Say goodbye to cluttered code files and hello to clean, maintainable code. Boost your productivity and code quality with Style Extractor.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.removeInlineStyles",
+        "title": "Remove Inline Styles"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.89.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}

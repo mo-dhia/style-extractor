@@ -50,13 +50,13 @@ async function activate(context) {
                             (clearedValue[0] === "'" && clearedValue[clearedValue.length - 1] === "'")) {
                             let cssProperty = property.replace(/([A-Z])/g, "-$1").toLowerCase();
                             value = value[0] === ' ' ? value.slice(1) : value
-                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')};`;
+                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '').replace(/'/g,'').replace(/"/g,'')};`;
                         } else if (isNaN(Number(clearedValue))) {
                             complex.push(`${property}: ${splitValue.slice(1).join(':').replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')}`);
                         } else {
                             value = value[0] === ' ' ? value.slice(1) : value
                             let cssProperty = property.replace(/([A-Z])/g, "-$1").toLowerCase();
-                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')};`;
+                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '').replace(/'/g,'').replace(/"/g,'')};`;
                         }
 
                     } else {

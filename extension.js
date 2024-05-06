@@ -115,10 +115,10 @@ async function activate(context) {
             // React JSX or JS file
             findStyles(type, true)
         } else if (languageId === 'html') {
-            findStyles('html', true)
+            findStyles('html')
 
         } else if (languageId === 'svelte') {
-            findStyles('svelte', true)
+            findStyles('svelte')
         } else {
             vscode.window.showErrorMessage('Css extractor could not find type of the project');
             return;

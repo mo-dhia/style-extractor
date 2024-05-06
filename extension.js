@@ -28,9 +28,8 @@ async function activate(context) {
                 let stylesAcc = ''
                 for (let style of stylesArray) {
                     // Split the style into property and value
-
                     if (!isReact) {
-                        style = style.replace(/style=("[^"]*"|'[^']*')?/g, '').replace(/\n/g, '').replace(/ /g, '').replace(/"/g, '').replace(/'/g, '');
+                        style = style.replace(/style=("[^"]*"|'[^']*')?/g, '').replace(/\n/g, '').replace(/"/g, '').replace(/'/g, '');
                     }
                     if (!style) continue
 
@@ -50,12 +49,14 @@ async function activate(context) {
                         if ((clearedValue[0] === '"' && clearedValue[clearedValue.length - 1] === '"') ||
                             (clearedValue[0] === "'" && clearedValue[clearedValue.length - 1] === "'")) {
                             let cssProperty = property.replace(/([A-Z])/g, "-$1").toLowerCase();
-                            stylesAcc += ` ${cssProperty}: ${clearedValue.slice(1, -1)};`;
+                            value = value[0] === ' ' ? value.slice(1) : value
+                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')};`;
                         } else if (isNaN(Number(clearedValue))) {
-                            complex.push(`${property}: ${clearedValue}`);
+                            complex.push(`${property}: ${splitValue.slice(1).join(':').replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')}`);
                         } else {
+                            value = value[0] === ' ' ? value.slice(1) : value
                             let cssProperty = property.replace(/([A-Z])/g, "-$1").toLowerCase();
-                            stylesAcc += ` ${cssProperty}: ${clearedValue};`;
+                            stylesAcc += ` ${cssProperty}: ${value.replace(/\n/g, '').replace(/}/g, '').replace(/style={{/g, '')};`;
                         }
 
                     } else {
@@ -87,8 +88,10 @@ async function activate(context) {
             let index = 0
             input = input.replace(classIdPattern, (match, attribute) => {
                 const className = match.includes('id=') ? '#' + attribute : '.' + attribute
-                css += className + ' {' + styles[index] + ' }' + '\n'
                 index++
+                if (!styles[index] || styles[index] === ' ') return ''
+
+                css += className + ' {' + styles[index] + ' }' + '\n'
                 if (!attribute.includes(' ') && !attribute.includes('>') && !attribute.includes(':')) {
 
                     if (type === 'next' || type === 'react-native') {
